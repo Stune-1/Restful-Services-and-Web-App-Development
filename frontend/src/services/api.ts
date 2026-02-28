@@ -32,4 +32,19 @@ export const getEmployees = async (page: number = 1, limit: number = 10) => {
   return response.data;
 };
 
+export const getEmployee = async (id: number) => {
+  const response = await api.get(`/employees/${id}`);
+  return response.data;
+};
+
+export const updateEmployee = async (id: number, data: any) => {
+  const response = await api.put(`/employees/${id}`, data);
+  return response.data;
+};
+
+export const deleteEmployee = async (id: number) => {
+  const response = await api.delete(`/employees/${id}`);
+  return response.data;
+};
+
 export default api;

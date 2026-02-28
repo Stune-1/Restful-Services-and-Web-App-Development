@@ -10,20 +10,40 @@ export default function Dashboard() {
 
   return (
     <div className="container">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-        <h1>RTB Equipment Distribution System</h1>
-        <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
+      <div className="header">
+        <h1>🏢 RTB Equipment Distribution System</h1>
+        <button onClick={handleLogout} className="btn btn-danger">
+          🚪 Logout
+        </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-        <div className="card" style={{ cursor: 'pointer' }} onClick={() => navigate('/employees/new')}>
-          <h3 style={{ marginBottom: '12px', color: '#2563eb' }}>Add Employee</h3>
-          <p style={{ color: '#6b7280' }}>Register new employee with laptop details</p>
+      <div style={{ 
+        background: 'white', 
+        padding: '25px', 
+        borderRadius: '15px', 
+        marginBottom: '30px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+      }}>
+        <h2 style={{ color: '#667eea', marginBottom: '10px' }}>Welcome to RTB Equipment Management</h2>
+        <p style={{ color: '#6b7280', fontSize: '15px' }}>
+          Manage laptop distribution to employees efficiently. Add, view, edit, and delete employee records with their assigned equipment.
+        </p>
+      </div>
+
+      <div className="dashboard-grid">
+        <div className="dashboard-card" onClick={() => navigate('/employees/new')}>
+          <h3>➕ Add New Employee</h3>
+          <p>Register a new employee with laptop assignment details</p>
         </div>
 
-        <div className="card" style={{ cursor: 'pointer' }} onClick={() => navigate('/employees')}>
-          <h3 style={{ marginBottom: '12px', color: '#2563eb' }}>View Employees</h3>
-          <p style={{ color: '#6b7280' }}>Browse all registered employees</p>
+        <div className="dashboard-card" onClick={() => navigate('/employees')}>
+          <h3>📋 View All Employees</h3>
+          <p>Browse, search, edit, and manage employee records</p>
+        </div>
+
+        <div className="dashboard-card" style={{ borderLeftColor: '#10b981' }}>
+          <h3 style={{ color: '#10b981' }}>💼 Quick Stats</h3>
+          <p>View employee and equipment distribution statistics</p>
         </div>
       </div>
     </div>

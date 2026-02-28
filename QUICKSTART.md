@@ -2,7 +2,7 @@
 
 ## 1. Create Database
 ```bash
-createdb rtb_equipment
+createdb -U postgres rtb_equipment
 ```
 
 ## 2. Start Backend

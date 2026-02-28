@@ -43,26 +43,39 @@ export default function EmployeeForm() {
 
   return (
     <div className="container">
-      <div style={{ marginBottom: '24px' }}>
-        <button onClick={() => navigate('/dashboard')} className="btn btn-secondary">← Back</button>
+      <div className="header">
+        <h1>➕ Register New Employee</h1>
+        <button onClick={() => navigate('/dashboard')} className="btn btn-secondary">
+          ← Back to Dashboard
+        </button>
       </div>
 
-      <div className="card" style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <h2 style={{ marginBottom: '24px' }}>Register New Employee</h2>
-
-        {success && <div className="success">Employee registered successfully!</div>}
-        {error && <div className="error" style={{ marginBottom: '16px', padding: '12px', background: '#fee2e2', borderRadius: '4px' }}>{error}</div>}
+      <div className="card" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        {success && (
+          <div className="alert alert-success">
+            ✅ Employee registered successfully! Redirecting...
+          </div>
+        )}
+        
+        {error && (
+          <div className="alert alert-error">
+            ❌ {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <h3 style={{ color: '#667eea', marginBottom: '20px', fontSize: '20px' }}>
+            👤 Personal Information
+          </h3>
+          <div className="form-grid">
             <div className="form-group">
               <label>First Name *</label>
-              <input name="firstName" value={formData.firstName} onChange={handleChange} required />
+              <input name="firstName" value={formData.firstName} onChange={handleChange} required placeholder="Samanta" />
             </div>
 
             <div className="form-group">
               <label>Last Name *</label>
-              <input name="lastName" value={formData.lastName} onChange={handleChange} required />
+              <input name="lastName" value={formData.lastName} onChange={handleChange} required placeholder="ISHIMWE" />
             </div>
 
             <div className="form-group">
@@ -77,9 +90,14 @@ export default function EmployeeForm() {
 
             <div className="form-group">
               <label>Email *</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="samanta@rtb.gov.rw" />
             </div>
+          </div>
 
+          <h3 style={{ color: '#667eea', marginTop: '30px', marginBottom: '20px', fontSize: '20px' }}>
+            💼 Employment Details
+          </h3>
+          <div className="form-grid">
             <div className="form-group">
               <label>Department *</label>
               <input name="department" value={formData.department} onChange={handleChange} required placeholder="Human Resource" />
@@ -89,7 +107,12 @@ export default function EmployeeForm() {
               <label>Position *</label>
               <input name="position" value={formData.position} onChange={handleChange} required placeholder="Manager" />
             </div>
+          </div>
 
+          <h3 style={{ color: '#667eea', marginTop: '30px', marginBottom: '20px', fontSize: '20px' }}>
+            💻 Laptop Assignment
+          </h3>
+          <div className="form-grid">
             <div className="form-group">
               <label>Laptop Manufacturer *</label>
               <input name="laptopManufacturer" value={formData.laptopManufacturer} onChange={handleChange} required placeholder="HP" />
@@ -106,8 +129,8 @@ export default function EmployeeForm() {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ marginTop: '24px', width: '100%' }} disabled={loading}>
-            {loading ? 'Registering...' : 'Register Employee'}
+          <button type="submit" className="btn btn-primary" style={{ marginTop: '30px', width: '100%', padding: '15px' }} disabled={loading}>
+            {loading ? '⏳ Registering...' : '✅ Register Employee'}
           </button>
         </form>
       </div>

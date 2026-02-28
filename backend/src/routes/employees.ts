@@ -84,4 +84,95 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      `SELECT id, first_name as "firstName", last_name as "lastName", 
+              national_id as "nationalId", telephone, email, department, position,
+              laptop_manufacturer as "laptopManufacturer", 
+              laptop_model as "laptopModel", 
+              laptop_serial as "laptopSerial"
+       FROM employees WHERE id = $1`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    res.json({ data: result.rows[0] });
+  } catch (error) {
+    console.error('Get employee error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.put('/:id',
+  authMiddleware,
+  body('firstName').trim().notEmpty(),
+  body('lastName').trim().notEmpty(),
+  body('nationalId').trim().notEmpty(),
+  body('telephone').trim().notEmpty(),
+  body('email').isEmail(),
+  body('department').trim().notEmpty(),
+  body('position').trim().notEmpty(),
+  body('laptopManufacturer').trim().notEmpty(),
+  body('laptopModel').trim().notEmpty(),
+  body('laptopSerial').trim().notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { id } = req.params;
+      const {
+        firstName, lastName, nationalId, telephone, email,
+        department, position, laptopManufacturer, laptopModel, laptopSerial
+      } = req.body;
+
+      const result = await pool.query(
+        `UPDATE employees 
+         SET first_name = $1, last_name = $2, national_id = $3, telephone = $4, 
+             email = $5, department = $6, position = $7, 
+             laptop_manufacturer = $8, laptop_model = $9, laptop_serial = $10
+         WHERE id = $11
+         RETURNING *`,
+        [firstName, lastName, nationalId, telephone, email, department, position,
+         laptopManufacturer, laptopModel, laptopSerial, id]
+      );
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+
+      res.json({ data: result.rows[0], message: 'Employee updated successfully' });
+    } catch (error: any) {
+      if (error.code === '23505') {
+        return res.status(400).json({ message: 'Email, national ID, or laptop serial already exists' });
+      }
+      console.error('Update employee error:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+);
+
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('DELETE FROM employees WHERE id = $1 RETURNING *', [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    res.json({ message: 'Employee deleted successfully' });
+  } catch (error) {
+    console.error('Delete employee error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 export default router;

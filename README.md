@@ -1,18 +1,23 @@
 # RTB Equipment Distribution System
 
-Full-stack app for managing laptop distribution to employees at Rwanda TVET Board.
+Modern full-stack app for managing laptop distribution to employees at Rwanda TVET Board.
 
-## Tech Stack
+## ✨ Features
 
-- Frontend: React + TypeScript + Vite
-- Backend: Node.js + Express + TypeScript
-- Database: PostgreSQL
+- 🔐 JWT Authentication
+- ➕ Add Employees (11 fields)
+- 📋 View Employees (Paginated)
+- ✏️ Edit Employees
+- 🗑️ Delete Employees
+- 🎨 Modern, Responsive UI
+- 🔒 Protected Routes
+- ✅ Input Validation
 
-## Quick Setup
+## 🚀 Quick Setup
 
 ### 1. Create Database
 ```bash
-createdb rtb_equipment
+createdb -U postgres rtb_equipment
 ```
 
 ### 2. Install & Start Backend
@@ -42,28 +47,61 @@ npm run dev
 ### 5. Open Browser
 Go to `http://localhost:5173` and login!
 
-## Features
+## 🎯 What You Can Do
 
+1. **Login** - Secure authentication with JWT
+2. **Dashboard** - Overview and quick navigation
+3. **Add Employee** - Register new employees with laptop details
+4. **View Employees** - Paginated list with search
+5. **Edit Employee** - Update employee information
+6. **Delete Employee** - Remove employee records
+
+## 🛠️ Tech Stack
+
+**Frontend:**
+- React 19 + TypeScript
+- Vite 8
+- React Router DOM
+- Axios
+- Modern CSS with Gradients
+
+**Backend:**
+- Node.js + Express
+- TypeScript
+- PostgreSQL
 - JWT Authentication
-- Employee Registration (11 fields)
-- Paginated Employee List
-- Responsive Design
-- Input Validation
-- Protected Routes
+- bcryptjs
 
-## API Endpoints
+## 📡 API Endpoints
 
 - `POST /api/auth/login` - Login
-- `POST /api/employees` - Create employee (protected)
-- `GET /api/employees?page=1&limit=10` - Get employees (protected)
+- `POST /api/employees` - Create employee
+- `GET /api/employees` - Get all employees (paginated)
+- `GET /api/employees/:id` - Get single employee
+- `PUT /api/employees/:id` - Update employee
+- `DELETE /api/employees/:id` - Delete employee
 
-## Project Structure
+All endpoints except login require JWT token.
+
+## 🎨 UI Features
+
+- Beautiful gradient design
+- Smooth animations
+- Responsive layout
+- Modal dialogs
+- Loading states
+- Error handling
+- Success notifications
+- Hover effects
+- Modern card layouts
+
+## 📁 Project Structure
 
 ```
 ├── frontend/
 │   └── src/
 │       ├── pages/          # Login, Dashboard, EmployeeForm, EmployeeList
-│       ├── components/     # PrivateRoute
+│       ├── components/     # PrivateRoute, EditEmployeeModal
 │       └── services/       # API client
 │
 └── backend/
@@ -74,4 +112,15 @@ Go to `http://localhost:5173` and login!
         └── server.ts       # Express server
 ```
 
-That's it! Simple and clean.
+## 🔒 Security
+
+- Password hashing with bcrypt
+- JWT token authentication (24h expiration)
+- Protected API routes
+- CORS configuration
+- SQL injection prevention
+- Input validation
+
+---
+
+Built with ❤️ for Rwanda TVET Board
